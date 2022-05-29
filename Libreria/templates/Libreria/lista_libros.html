@@ -1,0 +1,54 @@
+{% extends "Libreria/index.html" %}
+
+{% load bootstrap5 %}
+
+{% block cuerpo %}
+<div class="container">    
+  
+  <div class="row">
+    <div class="col">
+      {% url 'agregar_libro' as agregar_libro_url %}
+      {% url 'buscar_libro' as buscar_libro_url %}
+      {% url 'index' as autores_url %}
+      {% url 'editorial' as editorial_url %}
+      {% bootstrap_button "Agregar" button_class="btn-success" button_type="link" href=agregar_libro_url %} 
+      {% bootstrap_button "Buscar" button_class="btn-success" button_type="link" href=buscar_libro_url %}
+      {% bootstrap_button "Autores" button_class="btn-success" button_type="link" href=autores_url %}
+      {% bootstrap_button "Editoriales" button_class="btn-success" button_type="link" href=editorial_url %}
+    <div>
+  <div>
+  <h1> Libros </h1>
+  <div class="row">
+    <div class="col">
+        {% if libro %}
+        <table class="table">
+            <thead>
+                <th scope="col">Identificador</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Editorial</th>
+                <th scope="col">Fecha de Publicacion</th>
+            </thead>
+        
+            {% for l in libro %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{l.id}} </th>
+                    <td> {{l.titulo}} </td>
+                    <td> {{l.autor}} </td>
+                    <td> {{l.editorial}} </td>
+                    <td> {{l.fecha_de_publicacion}} </td>
+                    <td> {{l.isbn}} </td>
+                    {% url 'borrar_libro' identificador=l.id as borrar_url %}
+                    <td>{% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrar_url %}</td>
+                </tr>  
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tienes Libros cargados</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

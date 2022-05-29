@@ -1,0 +1,51 @@
+{% extends "Libreria/index.html" %}
+
+{% load bootstrap5 %}
+
+{% block cuerpo %}
+<div class="container">    
+  
+  <div class="row">
+    <div class="col">
+      {% url 'agregar_editorial' as agregar_editorial_url %}
+      {% url 'buscar_editorial' as buscar_editorial_url %}
+      {% url 'index' as autores_url %}
+      {% url 'libros' as libros_url %}
+      {% bootstrap_button "Agregar" button_class="btn-success" button_type="link" href=agregar_editorial_url %} 
+      {% bootstrap_button "Buscar" button_class="btn-success" button_type="link" href=buscar_editorial_url %}
+      {% bootstrap_button "Autores" button_class="btn-success" button_type="link" href=autores_url %}
+      {% bootstrap_button "Libros" button_class="btn-success" button_type="link" href=libros_url %}
+    <div>
+  <div>
+  <h1> Editoriales </h1>
+  <div class="row">
+    <div class="col">
+        {% if editorial %}
+        <table class="table">
+            <thead>
+                <th scope="col">Identificador</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Pais</th>
+                <th scope="col">E-mail</th>
+            </thead>
+        
+            {% for e in editorial %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{e.id}} </th>
+                    <td> {{e.nombre_editorial}} </td>
+                    <td> {{e.pais_editorial}} </td>
+                    <td> {{e.email}} </td>
+                    {% url 'borrar_editorial' identificador=e.id as borrar_url %}
+                    <td>{% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrar_url %}</td>
+                </tr>  
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tienes editoriales cargadas</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
